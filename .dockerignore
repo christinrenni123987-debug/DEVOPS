@@ -1,0 +1,10 @@
+.env
+.git
+.gitignore
+__pycache__
+*.pyc
+.venv
+README.md
+docker-compose.yaml
+k8s
+loadtest
