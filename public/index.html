@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>To-Do</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:640px;margin:2rem auto;padding:0 1rem}
+form{display:flex;gap:.5rem}input[type=text]{flex:1;padding:.5rem}
+li{display:flex;align-items:center;gap:.5rem;padding:.35rem 0}li span{flex:1}.done span{text-decoration:line-through;opacity:.6}
+small{color:#666}
+</style></head><body>
+<h1>To-Do</h1>
+<form id="f"><input type="text" id="t" placeholder="New task" maxlength="200" required><button>Add</button></form>
+<ul id="tasks"></ul>
+<h2>Recent activity</h2><ul id="act"></ul>
+<script>
+const $=id=>document.getElementById(id);
+async function api(url,opt){const r=await fetch(url,opt);if(!r.ok&&r.status!==204){const e=await r.json().catch(()=>({}));alert(e.error||"Error");}return r;}
+function li(){return document.createElement("li");}
+async function load(){
+  const tasks=await (await api("/api/tasks")).json();
+  $("tasks").replaceChildren(...tasks.map(t=>{
+    const e=li(); if(t.completed)e.className="done";
+    const c=document.createElement("input");c.type="checkbox";c.checked=t.completed;
+    c.onchange=async()=>{await api("/api/tasks/"+t._id,{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({completed:c.checked})});load();};
+    const s=document.createElement("span");s.textContent=t.title;
+    const d=document.createElement("button");d.textContent="Delete";
+    d.onclick=async()=>{await api("/api/tasks/"+t._id,{method:"DELETE"});load();};
+    e.append(c,s,d);return e;}));
+  const act=await (await api("/api/activity")).json();
+  $("act").replaceChildren(...act.map(a=>{const e=li();const s=document.createElement("small");
+    s.textContent=`${a.action}: ${a.task_title} (${new Date(a.created_at).toLocaleString()})`;e.append(s);return e;}));
+}
+$("f").onsubmit=async ev=>{ev.preventDefault();
+  await api("/api/tasks",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({title:$("t").value})});
+  $("t").value="";load();};
+load();
+</script></body></html>
