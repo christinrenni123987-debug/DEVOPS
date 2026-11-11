@@ -1,0 +1,4 @@
+Method,Name,Error,Occurrences,First Seen,Last Seen
+GET,/api/tasks,RemoteDisconnected('Remote end closed connection without response'),155,2026-11-11T20:07:30Z,2026-11-11T20:07:37Z
+GET,/health/,RemoteDisconnected('Remote end closed connection without response'),36,2026-11-11T20:07:36Z,2026-11-11T20:07:37Z
+GET,/api/activity,RemoteDisconnected('Remote end closed connection without response'),69,2026-11-11T20:07:34Z,2026-11-11T20:07:37Z

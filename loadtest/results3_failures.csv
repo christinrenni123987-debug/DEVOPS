@@ -1,0 +1,4 @@
+Method,Name,Error,Occurrences,First Seen,Last Seen
+GET,/api/activity,"ConnectionRefusedError(10061, '[WinError 10061] No connection could be made because the target machine actively refused it.')",1710,2026-11-11T16:51:51Z,2026-11-11T16:54:40Z
+GET,/health/,"ConnectionRefusedError(10061, '[WinError 10061] No connection could be made because the target machine actively refused it.')",853,2026-11-11T16:51:51Z,2026-11-11T16:54:39Z
+GET,/api/tasks,"ConnectionRefusedError(10061, '[WinError 10061] No connection could be made because the target machine actively refused it.')",4169,2026-11-11T16:51:51Z,2026-11-11T16:54:40Z
